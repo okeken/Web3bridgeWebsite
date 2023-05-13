@@ -4,7 +4,7 @@ import { useRouter } from 'next/router'
 import Link from "next/link";
 import { registrationSchema, validationOpt } from "schema";
 import { useForm, Controller } from "react-hook-form";
-import { useLazerpay } from 'lazerpay-react'
+// import { useLazerpay } from 'lazerpay-react'
 import Input from "@components/commons/Input";
 import Button from "@components/commons/Button";
 import PhoneInput from "@components/commons/PhoneInput";
@@ -106,15 +106,21 @@ const onSuccessPayStack = ({reference=""}):void => {
 
       const initializePaymentPayStack = usePaystackPayment({...config, ...userEmail,});
       
-      const initializePaymentLazerPay = useLazerpay({...lazerPayConfig, ...{
-        customerName: userEmail.name,
-        customerEmail: userEmail.email,
-        onSuccess:()=>router.push('/')
-      }});
+      // const initializePaymentLazerPay = useLazerpay({...lazerPayConfig, ...{
+      //   customerName: userEmail.name,
+      //   customerEmail: userEmail.email,
+      //   onSuccess:()=>router.push('/')
+      // }});
 
    
 
 const onSubmit = async(value)=>{
+  const closed = true;
+  if (closed) {
+    alert("Registration closed");
+    return;
+  }
+
     const data = {
       ...value,
       currentTrack:Tracks.web2,
@@ -165,9 +171,9 @@ const retryPayment=(payment)=>{
     initializePaymentPayStack(onSuccessPayStack, onClose)
   }
   
-  if(payment === PaymentMethod.crypto){
-    initializePaymentLazerPay()
-  }  
+  // if(payment === PaymentMethod.crypto){
+  //   initializePaymentLazerPay()
+  // }  
 }
     return <>
     <div className="max-w-lg m-12 mx-auto">
